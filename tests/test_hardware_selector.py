@@ -1,5 +1,5 @@
 import pytest
-from PyQt5.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 
 from gui.main_gui import OCTGUI
 from hardware import (

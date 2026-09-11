@@ -11,7 +11,7 @@ import os
 import logging
 from pathlib import Path
 
-from PyQt5.QtWidgets import (
+from PySide6.QtWidgets import (
     QWidget,
     QMainWindow,
     QPushButton,
@@ -30,8 +30,8 @@ from PyQt5.QtWidgets import (
     QProgressBar,
     QLineEdit,
 )
-from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtGui import QPixmap
+from PySide6.QtCore import QTimer, Qt
+from PySide6.QtGui import QPixmap
 import pyqtgraph as pg
 
 # ── Capa de procesamiento ─────────────────────────────────────

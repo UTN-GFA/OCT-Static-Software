@@ -13,7 +13,7 @@ from typing import Optional, Callable
 
 import numpy as np
 
-from PyQt5.QtCore import QObject, pyqtSignal
+from PySide6.QtCore import QObject, Signal
 
 logger = logging.getLogger(__name__)
 
@@ -52,13 +52,13 @@ class ScanController(QObject):
     La GUI NO debe acceder directamente a los buffers (son internos).
     """
 
-    point_ready = pyqtSignal(float, float, float, object, object)
-    progress = pyqtSignal(
+    point_ready = Signal(float, float, float, object, object)
+    progress = Signal(
         int, int, str, float, float, float
     )  # acquired, total, eta, x_mm, y_mm, z_mechanical_mm
-    scan_finished = pyqtSignal(str, object)  # filepath, ScanSummary
-    scan_aborted = pyqtSignal(str, object)  # filepath, ScanSummary
-    scan_error = pyqtSignal(str)  # error_msg
+    scan_finished = Signal(str, object)  # filepath, ScanSummary
+    scan_aborted = Signal(str, object)  # filepath, ScanSummary
+    scan_error = Signal(str)  # error_msg
 
     def __init__(self, acq_engine, proc_engine, saver, scan_worker_factory: Callable):
         """

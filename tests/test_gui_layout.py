@@ -2,9 +2,9 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFontMetrics
-from PyQt5.QtWidgets import QApplication, QDoubleSpinBox, QGroupBox, QLabel
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFontMetrics
+from PySide6.QtWidgets import QApplication, QDoubleSpinBox, QGroupBox, QLabel
 
 from gui.main_gui import (
     GLOBAL_PROFILE_COLOR,

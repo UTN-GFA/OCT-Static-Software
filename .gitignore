@@ -1,1 +1,6 @@
+*/__pychache__
+*.log
 .venv
+
+build
+dist

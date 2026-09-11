@@ -14,7 +14,7 @@ import logging
 import time
 from enum import Enum, auto
 
-from PyQt5.QtCore import QThread, pyqtSignal
+from PySide6.QtCore import QThread, Signal
 
 from constants import AXIS_NUMBERS
 from hardware.interfaces import MotionCancelled
@@ -41,8 +41,8 @@ class MonitorWorker(QThread):
     Adquiere un espectro, procesa y emite el resultado.
     La GUI solo grafica (nunca procesa).
     """
-    result_ready = pyqtSignal(object, object)  # (RawPointData, ProcessingResult)
-    error_occurred = pyqtSignal(str)
+    result_ready = Signal(object, object)  # (RawPointData, ProcessingResult)
+    error_occurred = Signal(str)
 
     def __init__(self, acq_engine, proc_engine):
         super().__init__()
@@ -86,11 +86,11 @@ class ScanWorker(QThread):
     Mueve motores, adquiere, procesa y emite resultado por punto.
     La GUI solo grafica y guarda (nunca adquiere ni procesa).
     """
-    point_ready = pyqtSignal(float, float, float, object, object)
+    point_ready = Signal(float, float, float, object, object)
     # (x_mm, y_mm, z_mechanical_mm, RawPointData, ProcessingResult)
-    finished = pyqtSignal()
-    error_occurred = pyqtSignal(str)
-    aborted = pyqtSignal()
+    finished = Signal()
+    error_occurred = Signal(str)
+    aborted = Signal()
 
     def __init__(
         self,
@@ -230,9 +230,9 @@ class MoveWorker(QThread):
     Soporta uno o varios ejes (lista de (axis, target_pos)), de modo que
     también sirve para "Home (0,0,0)" sin bloquear la GUI.
     """
-    finished_ok = pyqtSignal(list)        # [(axis:int, actual:float), ...]
-    stopped = pyqtSignal()
-    error_occurred = pyqtSignal(str)
+    finished_ok = Signal(list)        # [(axis:int, actual:float), ...]
+    stopped = Signal()
+    error_occurred = Signal(str)
 
     def __init__(self, mot, moves, position_tolerance_mm):
         """

@@ -2,7 +2,7 @@ import pytest
 
 from hardware.motor_esp301 import ESP301MotionController
 from gui.workers import ScanWorker
-from PyQt5.QtCore import QCoreApplication
+from PySide6.QtCore import QCoreApplication
 
 
 def test_esp301_goto_and_wait_returns_verified_position(monkeypatch):

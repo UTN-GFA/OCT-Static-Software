@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 
 import pytest
-from PyQt5.QtWidgets import QApplication, QCheckBox, QMainWindow
+from PySide6.QtWidgets import QApplication, QCheckBox, QMainWindow
 
 from gui.main_gui import OCTGUI
 from gui.workers import SystemState

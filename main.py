@@ -27,8 +27,8 @@ logger = logging.getLogger(__name__)
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from PyQt5.QtCore import QLocale
-from PyQt5.QtWidgets import QApplication
+from PySide6.QtCore import QLocale
+from PySide6.QtWidgets import QApplication
 from gui.main_gui import OCTGUI
 
 
