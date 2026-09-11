@@ -1,0 +1,289 @@
+PLAN PRAGMÁTICO DE PRUEBAS REALES — OCT_Static_Software V6.0
+==============================================
+
+Objetivo: validar que OCT_Static_Software V6.0 funciona con ESP301 + HR4000 reales sin
+convertir la campaña en una condena de por vida.
+
+Schema esperado: 6.0.0
+
+Regla general:
+- Empezar con rangos mecánicos mínimos y seguros.
+- No probar combinaciones redundantes.
+- Si una prueba falla, detener la campaña y corregir antes de continuar.
+- Guardar archivos y logs de cada prueba relevante.
+
+
+0. SEGURIDAD Y PREPARACIÓN
+---------------------------
+
+[ ] Confirmar límites mecánicos y posición inicial segura.
+[ ] Confirmar sentido positivo/negativo de X, Y y Z.
+[ ] Confirmar que el paro físico está accesible.
+[ ] Confirmar ESP301, HR4000, puerto y firmware.
+[ ] Confirmar versión visible OCT_Static_Software.
+[ ] Confirmar que se puede recuperar la posición inicial sin colisión.
+[ ] Crear una carpeta de campaña para los archivos de prueba.
+
+
+1. CONEXIÓN BÁSICA
+------------------
+
+[ ] Conectar ESP301 y verificar X/Y/Z.
+[ ] Leer y registrar la posición inicial de los tres ejes.
+[ ] Conectar HR4000.
+[ ] Verificar modelo, número de serie y wavelengths_nm.
+[ ] Confirmar que wavelengths_nm es válido, finito y de longitud constante.
+[ ] Iniciar y detener el modo Monitor.
+[ ] Confirmar que la GUI no se bloquea y vuelve a IDLE.
+
+Si falla la conexión o la lectura espectral básica, no continuar con barridos.
+
+
+2. MOVIMIENTO MANUAL Y STOP
+---------------------------
+
+Repetir una vez para cada eje X, Y y Z, usando desplazamientos pequeños:
+
+[ ] Movimiento positivo.
+[ ] Movimiento negativo.
+[ ] Confirmar eje correcto y posición final razonable.
+[ ] Iniciar un movimiento más largo, dentro de límites seguros.
+[ ] Presionar STOP durante el movimiento.
+[ ] Confirmar que el eje se detiene.
+[ ] Confirmar que se puede mover nuevamente después del STOP.
+
+Durante el movimiento:
+
+[ ] Ejecutar de barrido deshabilitado.
+[ ] Reconexión de motores deshabilitada.
+[ ] STOP habilitado.
+
+Al finalizar:
+
+[ ] Ejecutar y reconexión vuelven a habilitarse.
+
+
+3. HR4000: EXPOSICIÓN Y CORRECCIONES
+------------------------------------
+
+No hace falta hacer barridos completos para cada combinación. Usar Monitor y
+un barrido mínimo.
+
+[ ] Exposición nominal.
+[ ] Exposición baja segura.
+[ ] Exposición alta segura.
+[ ] Dark OFF.
+[ ] Dark ON.
+[ ] No-linealidad OFF.
+[ ] No-linealidad ON.
+[ ] Una prueba con Dark ON + no-linealidad ON.
+
+Verificar:
+
+[ ] El espectro cambia razonablemente con la exposición.
+[ ] No aparecen excepciones ni desconexiones.
+[ ] La metadata registra exposición, dark y no-linealidad.
+[ ] La señal no queda saturada sin que sea evidente.
+[ ] Lecturas repetidas en la misma posición tienen forma razonablemente
+    estable.
+
+
+4. BARRIDO MÍNIMO DE REFERENCIA
+-------------------------------
+
+Usar una configuración pequeña, por ejemplo 3 puntos, exposición nominal,
+settling nominal, M=1, Snake, NPZ.
+
+[ ] Barrido sin ejes activos: un único punto.
+[ ] Barrido 1-D en X.
+[ ] Confirmar que planned_points coincide con lo esperado.
+[ ] Confirmar que las coordenadas guardadas coinciden con el movimiento.
+[ ] Confirmar que el espectro, perfil y pico tienen sentido visual/físico.
+[ ] Confirmar que el archivo abre correctamente.
+
+Este es el barrido base. Si no pasa, no tiene sentido probar configuraciones
+más grandes.
+
+
+5. EJES, RECORRIDO Y GRILLA
+----------------------------
+
+No hace falta probar las 6 órdenes en barridos grandes. Usar una grilla pequeña
+con 2 o 3 puntos por eje.
+
+[ ] 1-D en Y.
+[ ] 1-D en Z.
+[ ] 2-D X-Y con Snake.
+[ ] 2-D X-Y con Raster.
+[ ] 2-D X-Y con orden Y-X.
+[ ] 2-D X-Z.
+[ ] 2-D Y-Z.
+[ ] 3-D pequeño con orden XYZ.
+[ ] 3-D pequeño con un orden alternativo, por ejemplo ZYX.
+
+Verificar:
+
+[ ] El primer eje del orden es el rápido.
+[ ] Snake invierte el sentido de las filas.
+[ ] Raster mantiene el mismo sentido de las filas.
+[ ] Ejes inactivos no se mueven.
+[ ] axis_order queda guardado correctamente.
+[ ] x_mm, y_mm y z_mechanical_mm mantienen la correspondencia real.
+
+Los seis órdenes completos quedan cubiertos por la prueba sintética ya
+realizada; con hardware basta validar uno representativo y un orden alterno.
+
+
+6. MEDICIONES POR PUNTO
+-----------------------
+
+[ ] M=1 en el barrido de referencia.
+[ ] M=3 en una grilla pequeña.
+
+Verificar para M=3:
+
+[ ] Se adquieren tres espectros por punto.
+[ ] Se procesan tres resultados.
+[ ] Se guardan tres espectros/perfiles/picos cuando corresponda.
+[ ] measurements_per_point=3 en metadata.
+[ ] Las dimensiones tienen forma (puntos, M, ...).
+
+No probar M=1000 salvo que exista una razón concreta de rendimiento o memoria.
+
+
+7. GUARDADO NPZ/HDF5
+---------------------
+
+Repetir sólo el barrido de referencia:
+
+[ ] NPZ con configuración predeterminada.
+[ ] HDF5 con la misma configuración.
+
+Verificar en ambos:
+
+[ ] El archivo abre.
+[ ] Las coordenadas coinciden.
+[ ] wavelengths_nm coincide.
+[ ] planned_points, acquired_points y written_points son correctos.
+[ ] measurements_per_point es correcto.
+[ ] axis_order es correcto.
+[ ] Las formas de los datasets son coherentes.
+
+
+8. OPCIONES DE GUARDADO
+------------------------
+
+No hace falta repetir barridos grandes. En barridos mínimos probar:
+
+[ ] Espectros + picos.
+[ ] Sólo espectros.
+[ ] Sólo picos.
+[ ] Perfiles en modo módulo.
+[ ] Perfiles en modo complejo.
+[ ] Las tres opciones activas.
+
+Verificar únicamente que:
+
+[ ] Los datasets solicitados existen.
+[ ] Los no solicitados no aparecen como datos de medición.
+[ ] El archivo sigue siendo legible.
+
+
+9. VENTANAS DE PROFUNDIDAD
+---------------------------
+
+[ ] Sin ventanas: perfil global.
+[ ] Una ventana que contenga un reflector.
+[ ] Dos ventanas separadas.
+[ ] Confirmar que cada ventana produce su eje, perfil y pico correctos.
+
+No es necesario probar las cinco ventanas salvo que se vayan a usar realmente.
+
+
+10. ABORTADO DEL BARRIDO
+------------------------
+
+Usar un barrido suficientemente largo pero seguro.
+
+[ ] Solicitar Abort mientras se mueve.
+[ ] Solicitar Abort durante la adquisición/procesamiento.
+[ ] Confirmar que termina el punto actual.
+[ ] Confirmar que no empieza el siguiente punto.
+[ ] Confirmar estado final abortado.
+[ ] Confirmar archivo legible y contadores correctos.
+[ ] Confirmar que se puede iniciar otro barrido después.
+
+No usar STOP manual para abortar el barrido.
+
+
+11. TRANSICIONES IMPORTANTES
+----------------------------
+
+[ ] Monitor → detener → movimiento manual.
+[ ] Movimiento manual → STOP → barrido.
+[ ] Barrido → Abort → Monitor.
+[ ] Barrido → Abort → movimiento manual.
+[ ] Reconectar HR4000 en IDLE → volver a Monitor.
+[ ] Reconectar motores en IDLE → volver a mover.
+
+Verificar que la GUI no queda bloqueada ni muestra estados falsos.
+
+
+12. VALIDACIÓN FÍSICA FINAL
+---------------------------
+
+Con una muestra o reflector de posición conocida:
+
+[ ] Medir una posición conocida.
+[ ] Repetir la medición varias veces.
+[ ] Comparar profundidad detectada con la referencia.
+[ ] Ejecutar un barrido pequeño alrededor de la muestra.
+[ ] Confirmar que el reflector aparece donde corresponde.
+[ ] Confirmar que cambiar M no desplaza artificialmente el pico.
+[ ] Confirmar que NPZ y HDF5 entregan resultados equivalentes.
+
+Registrar valores numéricos, no sólo capturas de pantalla.
+
+
+13. CRITERIOS DE APROBACIÓN
+---------------------------
+
+APTO si:
+
+[ ] Los tres ejes se mueven correctamente y STOP funciona.
+[ ] HR4000 entrega espectros coherentes.
+[ ] El barrido respeta coordenadas, orden y patrón.
+[ ] Abort termina de forma cooperativa.
+[ ] NPZ/HDF5 abren y conservan metadata/shapes correctos.
+[ ] La profundidad medida coincide razonablemente con la referencia.
+[ ] No quedan workers activos ni estados de GUI incoherentes.
+
+NO APTO si ocurre cualquiera de estos casos:
+
+- Se mueve un eje incorrecto.
+- STOP no detiene un movimiento seguro.
+- La aplicación continúa con posiciones desconocidas.
+- Las coordenadas guardadas no corresponden al movimiento real.
+- El archivo no abre o tiene shapes incoherentes.
+- El pico aparece desplazado sin explicación física.
+- Abort inicia puntos nuevos después de haber sido solicitado.
+
+Los temas de timeout WS y concurrencia serial se observan durante estas
+pruebas, pero no se modifican preventivamente sin evidencia del hardware real.
+
+
+REGISTRO FINAL
+--------------
+
+Fecha:
+Operador:
+ESP301 / firmware:
+HR4000 / número de serie:
+Configuración base:
+Archivos generados:
+PASS:
+FAIL:
+Observaciones:
+Decisión: APTO / APTO CON OBSERVACIONES / NO APTO
+
+FIN
