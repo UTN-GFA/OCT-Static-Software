@@ -1,4 +1,4 @@
-# OCT_Static_Software V6.0 — Schema 6.0.0
+# OCT_Static_Software V6.1 — Schema 6.0.0
 
 Software de adquisición y procesamiento OCT-FD.
 

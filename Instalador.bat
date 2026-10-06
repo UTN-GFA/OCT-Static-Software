@@ -1,10 +1,10 @@
 @echo off
 cd /d "%~dp0"
 
-title Instalador OCT_Static_Software V6.0
+title Instalador OCT_Static_Software V6.1
 
 echo ==========================================
-echo OCT_Static_Software V6.0
+echo OCT_Static_Software V6.1
 echo ==========================================
 echo.
 

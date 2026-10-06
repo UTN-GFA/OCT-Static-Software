@@ -77,7 +77,6 @@ from constants import (
     DEFAULT_MOTOR_PORT,
     MOCK_MOTION_SPEED_MM_S,
     MOCK_DARK_COUNTS,
-    SOFTWARE_NAME,
     SOFTWARE_VERSION,
 )
 
@@ -99,7 +98,7 @@ WINDOW_COLORS = ["c", "m", "g", "r", "b"]
 
 
 # ============================================================
-# GUI PRINCIPAL V6.0
+# GUI PRINCIPAL — identidad de release en SOFTWARE_VERSION
 # ============================================================
 class OCTGUI(QMainWindow):
 
@@ -762,7 +761,7 @@ class OCTGUI(QMainWindow):
     # UI
     # ============================================================
     def _setup_ui(self):
-        self.setWindowTitle(SOFTWARE_NAME)
+        self.setWindowTitle(SOFTWARE_VERSION)
         self.resize(1280, 800)
 
         central = QWidget()

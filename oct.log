@@ -1,0 +1,6 @@
+16:45:16 [INFO] __main__: Iniciando OCT_Static_Software V6.1 (mock=False)
+16:45:16 [ERROR] hardware.spectrometer_hr4000: HR4000: no se pudo conectar: No unopened device found.
+16:45:16 [ERROR] hardware.motor_esp301: Error abriendo COM3: SerialException: could not open port 'COM3': FileNotFoundError(2, 'El sistema no puede encontrar el archivo especificado.', None, 2)
+16:45:16 [INFO] gui.main_gui: ProcessingEngine inicializado
+16:45:16 [INFO] gui.main_gui: AcquisitionReader inicializado
+16:45:18 [WARNING] gui.main_gui: Configuración de profundidad no disponible: Rango axial no disponible: se requiere una calibración espectral válida

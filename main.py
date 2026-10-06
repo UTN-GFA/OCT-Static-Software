@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 main.py
-Punto de entrada OCT_Static_Software V6.0.
+Punto de entrada de OCT_Static_Software.
+La identidad de release se define en constants.py.
 
 Flags:
   --mock    Usar MockSpectrometer (sin hardware físico)

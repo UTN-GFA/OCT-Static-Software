@@ -1,4 +1,4 @@
-# OCT_Static_Software V6.0 — Schema 6.0.0 — Dependencias para Python 3.12
+# OCT_Static_Software V6.1 — Schema 6.0.0 — Dependencias para Python 3.12
 # numpy 1.26.x requerido para CPUs sin AVX2 (ej: AMD Jaguar/Kabini)
 # scipy 1.14.x es la ultima serie compatible con numpy 1.26
 
