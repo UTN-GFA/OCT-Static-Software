@@ -26,5 +26,5 @@ Ejecutar `Setup.bat`. El script activa `.venv` y lanza `main.py`.
 
 ## Autor
 
-Juan Lucas Trupia, Joaquin Terzano
+Juan Lucas Trupia
 Universidad Tecnológica Nacional
